@@ -13,4 +13,3 @@ class ICCNetworkInfo implements INetworkInfo{
   @override
   Future<bool> get isConnected => internetConnectionChecker.hasConnection;
 }
-
