@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../services_locator.dart';
 
 abstract class ISecuredStorageData {
   const ISecuredStorageData();
@@ -13,20 +16,43 @@ abstract class ISecuredStorageData {
 
   Future<void> cacheLoggedInUserSettings(Map<String, dynamic> token);
 
+  Future<void> deleteCachedLoggedInUserSettings();
+
   Future<void> addItem(String key, dynamic value);
 
   Future<String?> getItem(String key);
 
   Future<void> deleteAll();
+
+  Future<Map<String, String>> readAll();
 }
 
 class FSSSecuredStorageData extends ISecuredStorageData {
   final FlutterSecureStorage _storage;
 
+  //runtime cache
+  static Map<String, dynamic> tempCache = {};
+
+  /// Recaches data whenever settings change, call whenever add data to SecureSharedPreferences
+  static Future<void> cacheTmpCache() async {
+    final tmpResult = await sl<FlutterSecureStorage>().readAll();
+    log("CACHING tempCACHE ENDPOINT.....");
+    if(tmpResult[SecuredStorageKeys.cachedLoggedInUserDataKey]!= null){
+      tempCache.addAll(json
+          .decode(tmpResult[SecuredStorageKeys.cachedLoggedInUserDataKey]!));
+      tempCache.forEach((key, value) {
+        log("Key: $key, Value: $value");
+      });
+    }
+  }
+
   const FSSSecuredStorageData(this._storage);
 
+  @override
   Future<Map<String, String>> readAll() async {
-    return _storage.readAll();
+    final tmpResult= await _storage.readAll();
+
+    return tmpResult;
   }
 
   @override
@@ -50,10 +76,17 @@ class FSSSecuredStorageData extends ISecuredStorageData {
       key: SecuredStorageKeys.cachedLoggedInUserDataKey,
     );
     if(jsonString !=null) {
+      log(json.decode(jsonString).toString());
       return json.decode(jsonString);
     } else {
       return null;
     }
+  }
+
+
+  @override
+  Future<void> deleteCachedLoggedInUserSettings() async {
+    return _storage.delete( key: SecuredStorageKeys.cachedLoggedInUserDataKey,);
   }
 
   @override
@@ -98,9 +131,12 @@ class FSSSecuredStorageData extends ISecuredStorageData {
   }
 
 
+
 }
 
 class SecuredStorageKeys {
   static const String accessTokenKey = "accessToken";
   static const String cachedLoggedInUserDataKey = "cachedLoggedInUserData";
+  static const String lang = "lang";
+  static const String region = "region";
 }

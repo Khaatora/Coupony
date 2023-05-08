@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:maslaha/core/MVVM/model/app_state_model.dart';
 import 'package:maslaha/core/errors/exceptions/cache_exception.dart';
 import 'package:maslaha/core/errors/exceptions/server_exception.dart';
@@ -51,6 +54,9 @@ class TokenVerificationRepositoryImpl implements ITokenVerificationRepository{
       }
     } on CacheException catch (failure){
       return Left(CacheFailure(failure.message));
+    } on DioError catch (dioFailure) {
+      log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
+      return Left(ServerFailure(dioFailure.message!));
     }
   }
 
