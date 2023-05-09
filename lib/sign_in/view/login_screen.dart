@@ -77,11 +77,12 @@ class _LoginViewState extends State<LoginView> {
                   case LoadingState.init:
                   case LoadingState.loading:
                   case LoadingState.loaded:
-                    switch(state.type){
+                    switch (state.type) {
                       case LoginType.account:
                       case LoginType.guest:
-                      Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
-                      break;
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, Routes.home, (route) => false);
+                        break;
                     }
                     break;
                   case LoadingState.error:
@@ -165,14 +166,12 @@ class _LoginViewState extends State<LoginView> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: BlocBuilder<LoginCubit, LoginState>(
-                        buildWhen: (previous, current) => current.loadingState == LoadingState.loading,
                         builder: (context, state) {
                           return TextButton(
-                            onPressed: state.loadingState == LoadingState.loading? null :() {
-                              context.unFocusKeyboardFromScope();
-                              Navigator.pushNamed(
-                                  context, Routes.forgotPassword);
-                            },
+                            onPressed:
+                                state.loadingState == LoadingState.loading
+                                    ? null
+                                    : _navigateToForgotPasswordScreen,
                             style: const ButtonStyle(),
                             child: Text(
                               EnglishLocalization.forgotPassword,
@@ -189,7 +188,7 @@ class _LoginViewState extends State<LoginView> {
                       height: 40,
                     ),
                     SizedBox(
-                      height: kMinInteractiveDimension-8,
+                      height: kMinInteractiveDimension - 8,
                       child: BlocBuilder<LoginCubit, LoginState>(
                         builder: (context, state) {
                           switch (state.loadingState) {
@@ -276,8 +275,13 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
-  void _guestLogin(){
-  context.unFocusKeyboardFromScope();
-  LoginCubit.get(context).guestLogin();
-}
+  void _guestLogin() {
+    context.unFocusKeyboardFromScope();
+    LoginCubit.get(context).guestLogin();
+  }
+
+  void _navigateToForgotPasswordScreen() {
+    context.unFocusKeyboardFromScope();
+    Navigator.pushNamed(context, Routes.forgotPassword);
+  }
 }
