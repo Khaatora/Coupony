@@ -85,6 +85,12 @@ class _SignupViewState extends State<SignupView> {
               width: SizeConfig.safeBlockHorizontal * 100,
               padding: const EdgeInsets.all(16),
               child: BlocListener<SignupCubit, SignupState>(
+                listenWhen: (previous, current) {
+                  if(current.gender != previous.gender || current.dob != previous.dob){
+                    return false;
+                  }
+                  return true;
+                },
                 listener: (context, state) {
                   switch (state.signUpState) {
                     case SignUpState.init:
@@ -120,6 +126,7 @@ class _SignupViewState extends State<SignupView> {
                 child: PageView(
                   controller: _pageController,
                   physics: const NeverScrollableScrollPhysics(),
+
                   children: [
                     Form(
                       key: _formKey1,
@@ -270,8 +277,7 @@ class _SignupViewState extends State<SignupView> {
                             buildWhen: (previous, current) =>
                                 previous.gender != current.gender,
                             builder: (context, state) {
-                              return CustomLabeledDropDownButtonFormField<
-                                  String>(
+                              return CustomLabeledDropDownButtonFormField<String>(
                                 value: state.gender,
                                 items: SignupCubit.gender,
                                 textStyle: const TextStyle(
