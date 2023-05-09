@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:maslaha/core/MVVM/model/token_verification_response.dart';
@@ -15,9 +14,9 @@ class APITokenVerificationRemoteDataSource implements ITokenVerificationRemoteDa
   @override
   Future<TokenVerificationResponse> validateToken(String jwt) async {
     final response = await sl<Dio>().post(ApiConstants.verifyTokenPath,
-        data: jsonEncode({TokenVerificationJsonKeys.jwt: jwt}),
         options: Options(headers: {
           HttpHeaders.contentTypeHeader: "application/json",
+          HttpHeaders.authorizationHeader: jwt
         }));
     switch (response.statusCode) {
       case 200:
