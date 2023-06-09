@@ -19,15 +19,23 @@ class EnglishLocalization {
   static const String gender = "Gender";
   static const String emailVerified = "Email";
   static const String awaitingCode = "Sending code to your email";
-  static const String verifyingCode = "Verifying code...";
+  static const String verifyingCode = "Verifying code, please wait...";
   static const String finishingUp = "Nice, all done";
-
   static const String alreadyHaveAnAccountLogin = "Already have an account? Login!";
 
   //verifyCode text
-  static const String confirmCode = "Confirm code";
-  static const String enterCodeSentTo = "Enter code sent To:";
+  static const String confirmText = "Confirm";
+  static const String enterCodeSentTo = "Enter code sent to";
   static const String signingUp = "Finishing up, Please wait a moment";
+
+  //forgot-password text
+  static const String enterEmailForPasswordReset = "To reset password, Please enter the email address associated with your account.";
+  static const String enterYourNewPassword = "Enter your new password";
+  static const String continueText = "Continue";
+  static const String resetSuccessfully = "Your password has been reset";
+  static const String resettingPassword = "Resetting password, please wait...";
+  static const String checkEmail = "Checking email, please wait...";
+
 
   //validation
   static const String enterValidEmail = "Enter valid Email";
@@ -42,7 +50,9 @@ class EnglishLocalization {
   static const String expiredTokenErrorMessage = "Token is expired!";
   static const String invalidTokenErrorMessage = "Token is invalid!";
   static const String pleaseChooseYourLocationAndLanguage = "Please choose your location & language";
+
+  // init app screen
   static const String language = "Language";
   static const String region = "Region";
-  static const String done = "Done";
+  static const String done = "Continue";
 }
