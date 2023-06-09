@@ -5,6 +5,8 @@ class AppTheme {
   static final light = ThemeData(
     useMaterial3: true,
     primaryColor: AppColor.primaryColor,
+    // uncomment to simulate IOS theming
+    // platform: TargetPlatform.iOS,
     colorScheme: ColorScheme.light(
       primary: AppColor.primaryColor,
       secondary:AppColor.primaryColor,

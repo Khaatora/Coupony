@@ -22,6 +22,8 @@ late String route;
 void main() async {
   final WidgetsBinding widgetsBinding =
       WidgetsFlutterBinding.ensureInitialized();
+  // uncomment to simulate IOS behavior and uncomment theme's TargetPlatform
+  // debugDefaultTargetPlatformOverride  = TargetPlatform.iOS;
   ServicesLocator().init();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   // await sl<ISecuredStorageData>().deleteCachedLoggedInUserSettings();
@@ -32,6 +34,7 @@ void main() async {
       (l) => {l is ServerFailure ? route = Routes.login : Routes.initInfo},
       (r) => route = _determineRoute(r));
   log(route);
+  //default device orientation
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
