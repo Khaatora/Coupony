@@ -46,7 +46,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     _codeController = TextEditingController();
     _passwordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
-    _pageController = PageController(initialPage: 1);
+    _pageController = PageController();
   }
 
   @override
