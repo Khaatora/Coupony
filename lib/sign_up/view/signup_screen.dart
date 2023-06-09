@@ -438,7 +438,7 @@ class _SignupViewState extends State<SignupView> {
                                       ElevatedButton(
                                         onPressed: _verifyCode,
                                         child: const Text(
-                                            EnglishLocalization.confirmCode),
+                                            EnglishLocalization.confirmText),
                                       ),
                                     ],
                                   );
@@ -526,4 +526,5 @@ class _SignupViewState extends State<SignupView> {
           .then((value) => SignupCubit.get(context).signUp());
     }
   }
+
 }
