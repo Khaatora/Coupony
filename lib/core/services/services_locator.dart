@@ -23,7 +23,7 @@ import 'package:maslaha/sign_in/view_model/login_view_model/login_cubit.dart';
 import 'package:maslaha/sign_up/repository/i_signup_repository.dart';
 import 'package:maslaha/sign_up/repository/signup_repository_impl.dart';
 import 'package:maslaha/sign_up/view_model/signup_cubit.dart';
-import '../../forgot_password/model/remote/remote_data_source.dart';
+import '../../forgot_password/model/remote/api_forgot_password_remote_data_source.dart';
 import '../../initial_preferences/repository/initial_preferences_repository_impl.dart';
 import '../../sign_up/model/datasources/remote/remote_data_source.dart';
 import '../MVVM/model/remote/token_verification_remote_data_source.dart';
