@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:maslaha/core/errors/failures/server_failure.dart';
-import '../model/code_verification_response.dart';
+import '../../core/MVVM/model/code_verification_response.dart';
 import '../model/email_verification_response.dart';
 import '../model/signup_response.dart';
 
