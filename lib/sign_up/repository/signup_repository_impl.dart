@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:maslaha/core/errors/failures/server_failure.dart';
 import 'package:maslaha/core/services/secured_storage_data/secured_storage_data.dart';
-import 'package:maslaha/sign_up/model/code_verification_response.dart';
+import 'package:maslaha/core/MVVM/model/code_verification_response.dart';
 import 'package:maslaha/sign_up/model/email_verification_response.dart';
 import 'package:maslaha/sign_up/model/signup_response.dart';
 import '../../core/constants/cache_constants.dart';
