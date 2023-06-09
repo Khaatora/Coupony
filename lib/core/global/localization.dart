@@ -49,7 +49,13 @@ class EnglishLocalization {
   static const String missingTokenErrorMessage = "Token is missing!";
   static const String expiredTokenErrorMessage = "Token is expired!";
   static const String invalidTokenErrorMessage = "Token is invalid!";
-  static const String pleaseChooseYourLocationAndLanguage = "Please choose your location & language";
+  static const String invalidCredentialsErrorMessage = "Email or password is invalid";
+  static const String incorrectVerificationCodeErrorMessage = "Code is incorrect";
+  static const String passwordAlreadyUsedErrorMessage= "Password already used, write a new password";
+  static const String sessionNotVerifiedErrorMessage = "session not verified";
+  static const String invalidEmailErrorMessage = "Email does not exist in our records";
+  static const String sessionExpiredErrorMessage = "Signup session expired, please signup again";
+  static const String emailAlreadyInUseErrorMessage = "Email already in use, try another Email";static const String pleaseChooseYourLocationAndLanguage = "Please choose your location & language";
 
   // init app screen
   static const String language = "Language";

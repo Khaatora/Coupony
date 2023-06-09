@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:maslaha/core/errors/exceptions/server_exception.dart';
 import 'package:maslaha/core/errors/failures/IFailures.dart';
 import 'package:maslaha/forgot_password/model/initiate_password_reset_response.dart';
-import 'package:maslaha/forgot_password/model/remote/remote_data_source.dart';
+import 'package:maslaha/forgot_password/model/remote/api_forgot_password_remote_data_source.dart';
 import 'package:maslaha/forgot_password/model/reset_password_response.dart';
 import 'package:maslaha/forgot_password/repository/i_forgot_password_repository.dart';
 
