@@ -8,7 +8,7 @@ import 'package:maslaha/core/services/secured_storage_data/secured_storage_data.
 
 import '../../../../core/services/services_locator.dart';
 import '../../../repository/i_signup_repository.dart';
-import '../../code_verification_response.dart';
+import '../../../../core/MVVM/model/code_verification_response.dart';
 import '../../email_verification_response.dart';
 import '../../signup_response.dart';
 
