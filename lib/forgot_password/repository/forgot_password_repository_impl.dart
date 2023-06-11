@@ -33,7 +33,7 @@ class ForgotPasswordRepositoryImpl extends IForgotPasswordRepository{
       return Left(ServerFailure(serverFailure.message));
     } on DioError catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.message!));
+      return Left(ServerFailure(dioFailure.response!.data["message"] ?? dioFailure.message));
     }
   }
 
@@ -48,7 +48,7 @@ class ForgotPasswordRepositoryImpl extends IForgotPasswordRepository{
       return Left(ServerFailure(serverFailure.message));
     } on DioError catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.message!));
+      return Left(ServerFailure(dioFailure.response!.data["message"] ?? dioFailure.message));
     }
   }
 
@@ -63,7 +63,7 @@ class ForgotPasswordRepositoryImpl extends IForgotPasswordRepository{
       return Left(ServerFailure(serverFailure.message));
     } on DioError catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.message!));
+      return Left(ServerFailure(dioFailure.response!.data["message"] ?? dioFailure.message));
     }
   }
 

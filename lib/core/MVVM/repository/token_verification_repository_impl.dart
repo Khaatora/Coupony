@@ -56,7 +56,7 @@ class TokenVerificationRepositoryImpl implements ITokenVerificationRepository{
       return Left(CacheFailure(failure.message));
     } on DioError catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.message!));
+      return Left(ServerFailure(dioFailure.response!.data["message"] ?? dioFailure.message));
     }
   }
 

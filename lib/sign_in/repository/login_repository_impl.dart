@@ -29,11 +29,13 @@ class LoginRepositoryImpl extends ILoginRepository {
       final result = await remoteDataSource.login(params);
       return Right(result);
     } on ServerException catch (serverFailure) {
-      log("${serverFailure.runtimeType}: ${serverFailure.message}");
+      log("SeverException Error");
+      // log("${serverFailure.runtimeType}: ${serverFailure.message}");
       return Left(ServerFailure(serverFailure.message));
     } on DioError catch (dioFailure) {
-      log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.message!));
+      log("DioException Error");
+    log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
+      return Left(ServerFailure(dioFailure.response!.data["message"] ?? dioFailure.message));
     }
   }
 
@@ -58,7 +60,7 @@ class LoginRepositoryImpl extends ILoginRepository {
       return Left(ServerFailure(serverFailure.message));
     } on DioError catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.message!));
+      return Left(ServerFailure(dioFailure.response!.data["message"] ?? dioFailure.message));
     }
   }
 
