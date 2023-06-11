@@ -340,7 +340,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   }
 
   void _sendPassword() {
-    if (_formKey2.currentState!.validate()) {
+    if (_formKey3.currentState!.validate()) {
       ForgotPasswordCubit.get(context).resetPassword(_passwordController.text);
     }
   }

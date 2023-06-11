@@ -26,7 +26,7 @@ void main() async {
   // debugDefaultTargetPlatformOverride  = TargetPlatform.iOS;
   ServicesLocator().init();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  // await sl<ISecuredStorageData>().deleteCachedLoggedInUserSettings();
+  await sl<ISecuredStorageData>().deleteAll();
   final result = await sl<ITokenVerificationRepository>().validateToken();
   await FSSSecuredStorageData.cacheTmpCache();
   // sl<ISecuredStorageData>().readAll();

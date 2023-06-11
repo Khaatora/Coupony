@@ -21,11 +21,11 @@ class APITokenVerificationRemoteDataSource implements ITokenVerificationRemoteDa
     switch (response.statusCode) {
       case 200:
         return TokenVerificationResponse.fromJson(response.data);
-      case 298:
+      case 402:
         throw MissingTokenException(response.data["message"]);
-      case 299:
+      case 400:
         throw ExpiredTokenException(response.data["message"]);
-      case 303:
+      case 403:
         throw InvalidTokenException(response.data["message"]);
       default:
         throw const GenericAPIException();

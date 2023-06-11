@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +17,8 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   static ForgotPasswordCubit get(context) => BlocProvider.of<ForgotPasswordCubit>(context);
 
   Future<void> verifyEmailExists(String email) async {
-    emit(state.copyWith(passwordResetState: PasswordResetState.verifyingEmail));
+    emit(state.copyWith(passwordResetState: PasswordResetState.verifyingEmail, email: email));
+    log(state.email);
     final result = await forgotPasswordRepository
         .initiatePasswordReset(InitiatePasswordResetParams(state.email));
     result.fold((l) {
@@ -39,7 +42,8 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   }
 
   Future<void> resetPassword(String password) async{
-    emit(state.copyWith(passwordResetState: PasswordResetState.finishingUp));
+    emit(state.copyWith(passwordResetState: PasswordResetState.finishingUp, password: password));
+    log(password);
     final result = await forgotPasswordRepository
         .resetPassword(ResetPasswordParams(state.sessionId, password));
     result.fold((l) {

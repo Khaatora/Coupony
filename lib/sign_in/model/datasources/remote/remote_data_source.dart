@@ -40,8 +40,8 @@ class APILoginRemoteDataSource extends ILoginRemoteDataSource {
         securedStorageData.addToken(response.data[LoginJsonKeys.jwt]);
         securedStorageData.cacheLoggedInUserSettings(response.data[LoginJsonKeys.userSettings]);
         return LoginResponse.fromJson(response.data);
-      case 306:
-        throw const InvalidCredentialsException();
+      case 406:
+        throw InvalidCredentialsException(response.data["message"] as String);
       default:
         throw const GenericAPIException();
     }

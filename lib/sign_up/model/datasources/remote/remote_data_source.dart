@@ -43,9 +43,10 @@ class APISignupRemoteDataSource extends ISignupRemoteDataSource {
       case 200:
         securedStorageData.addToken(response.data[SignupJsonKeys.jwt]);
         return SignupResponse.fromJson(response.data);
-      case 300:
-        throw const SessionExpiredException();
-      case 301:
+      case 400:
+        throw  SessionExpiredException(response.data["message"] as String);
+      case 401:
+        throw SessionNotVerifiedException(response.data["message"] as String);
       default:
         throw const GenericAPIException();
     }
@@ -62,8 +63,8 @@ class APISignupRemoteDataSource extends ISignupRemoteDataSource {
     switch (response.statusCode) {
       case 200:
         return CodeVerificationResponse.fromJson(response.data);
-      case 304:
-        throw const IncorrectVerificationCodeException();
+      case 404:
+        throw IncorrectVerificationCodeException(response.data["message"] as String);
       default:
         throw const GenericAPIException();
     }
@@ -80,8 +81,8 @@ class APISignupRemoteDataSource extends ISignupRemoteDataSource {
     switch (response.statusCode) {
       case 200:
         return EmailVerificationResponse.fromJson(response.data);
-      case 305:
-        throw const EmailAlreadyInUseException();
+      case 405:
+        throw EmailAlreadyInUseException(response.data["message"] as String);
       default:
         throw const GenericAPIException();
     }

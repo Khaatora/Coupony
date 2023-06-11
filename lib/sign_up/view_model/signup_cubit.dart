@@ -33,13 +33,14 @@ class SignupCubit extends Cubit<SignupState> {
   }
 
   Future<void> verifyEmail(
-      String email, String password, String dob, String gender) async {
+      String email, String password, String dob) async {
     emit(state.copyWith(signUpState: SignUpState.awaitingCode));
     // String tempDOB = "${dob.year}-${dob.month}-${dob.day}";
     final result = await signupRepository.verifyEmail(EmailVerificationParams(
       email: email,
       password: password,
       dob: dob,
+      gender: state.gender,
     ));
 
     result.fold((l) {

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -34,8 +35,8 @@ class APIForgotPasswordRemoteDataSource extends IForgotPasswordRemoteDataSource{
     switch (response.statusCode) {
       case 200:
         return InitiatePasswordResetResponse.fromJson(response.data);
-      case 307:
-        throw const InvalidEmailException();
+      case 403:
+        throw InvalidEmailException(response.data["message"] as String);
       default:
         throw const GenericAPIException();
     }
@@ -49,14 +50,14 @@ class APIForgotPasswordRemoteDataSource extends IForgotPasswordRemoteDataSource{
         options: Options(headers: {
           HttpHeaders.contentTypeHeader: "application/json",
         }));
-
+    log("response body : ${response.data}, response status code:${response.statusCode}");
     switch (response.statusCode) {
       case 200:
         return CodeVerificationResponse.fromJson(response.data);
-      case 304:
-        throw const IncorrectVerificationCodeException();
+      case 403:
+        throw IncorrectVerificationCodeException(response.data["message"] as String);
       default:
-        throw const GenericAPIException();
+        throw GenericAPIException(response.data["message"] as String);
     }
   }
 
@@ -70,10 +71,10 @@ class APIForgotPasswordRemoteDataSource extends IForgotPasswordRemoteDataSource{
     switch (response.statusCode) {
       case 200:
         return ResetPasswordResponse.fromJson(response.data);
-      case 301:
-        throw const SessionNotVerifiedException();
-      case 308:
-        throw const PasswordAlreadyUsedException();
+      case 401:
+        throw SessionNotVerifiedException(response.data["message"] as String);
+      case 408:
+        throw PasswordAlreadyUsedException(response.data["message"] as String);
       default:
         throw const GenericAPIException();
     }
