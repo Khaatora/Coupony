@@ -2,7 +2,7 @@
 class ApiConstants{
 
   static const String apiKey = "";
-  static const String baseUrl = "https://ec4d-2a09-bac1-2200-18-00-241-6b.ngrok-free.app";
+  static const String baseUrl = "https://3803-197-48-119-47.ngrok-free.app/";
   // paths
   static const String verifyTokenPath = "/verify-token";
   static const String verifyCodePath = "/verify-code";
