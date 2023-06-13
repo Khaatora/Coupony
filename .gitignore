@@ -43,5 +43,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-#test fixtures
-/test/fixtures
+#ignore test
+/test/
