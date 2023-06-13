@@ -45,3 +45,5 @@ app.*.map.json
 
 #ignore test
 /test/
+/test/widget_test.dart
+/test/sign_in/repository/login_repository_impl_test.dart
