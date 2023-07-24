@@ -1,6 +1,7 @@
 class ApiConstants {
   static const String apiKey = "";
   static const String baseUrl = "https://16a5-41-47-174-54.eu.ngrok.io/";
+  static const String tempBaseUrl = "http://localhost:3000";
   // paths
   static const String verifyTokenPath = "/verify-token";
   static const String verifyCodePath = "/verify-code";
@@ -10,6 +11,7 @@ class ApiConstants {
   static const String initiatePasswordResetPath = "/initiate-password-reset";
   static const String resetPasswordPath = "/reset-password";
   static const String guestUserPath = "/gt";
+  static const String getCampaignsData = "/get_campaigns_data";
 
   static String verifyTokenUrl() => "$baseUrl$loginPath";
   static String verifyCodeUrl() => "$baseUrl$verifyCodePath";
@@ -20,4 +22,5 @@ class ApiConstants {
       "$baseUrl$initiatePasswordResetPath";
   static String resetPasswordUrl() => "$baseUrl$resetPasswordPath";
   static String guestUserUrl() => "$baseUrl$guestUserPath";
+  static String getCampaignsDataUrl() => "$tempBaseUrl$getCampaignsData";
 }
