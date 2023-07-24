@@ -36,6 +36,16 @@ class EnglishLocalization {
   static const String resettingPassword = "Resetting password, please wait...";
   static const String checkEmail = "Checking email, please wait...";
 
+  //home_layout
+    //home tab
+    static const String search = "Search";
+    static const String topStores = "Top stores";
+    //coupon tab
+    static const String coupons = "Coupons";
+    //favourites tab
+    static const String favourites = "Favourites";
+    //for you tab
+    static const String for_you = "For You";
 
   //validation
   static const String enterValidEmail = "Enter valid Email";
