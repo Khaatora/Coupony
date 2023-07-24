@@ -8,11 +8,13 @@ import 'package:maslaha/core/MVVM/repository/i_token_verification_repository.dar
 import 'package:maslaha/core/MVVM/repository/token_verification_repository_impl.dart';
 import 'package:maslaha/core/MVVM/view_model/ui_view_model/ui_cubit.dart';
 import 'package:maslaha/core/constants/api_constants.dart';
+import 'package:maslaha/core/home_layout/view_model/home_layout_cubit.dart';
 import 'package:maslaha/core/services/device_info/device_info.dart';
 import 'package:maslaha/core/services/secured_storage_data/secured_storage_data.dart';
 import 'package:maslaha/forgot_password/repository/forgot_password_repository_impl.dart';
 import 'package:maslaha/forgot_password/repository/i_forgot_password_repository.dart';
 import 'package:maslaha/forgot_password/view_model/forgot_password_cubit.dart';
+import 'package:maslaha/home/view_model/home_cubit.dart';
 import 'package:maslaha/initial_preferences/model/datasource/local/local_data_source.dart';
 import 'package:maslaha/initial_preferences/repository/i_initial_preferences_repository.dart';
 import 'package:maslaha/initial_preferences/view-model/initial_preferences_cubit.dart';
@@ -88,6 +90,8 @@ class ServicesLocator{
     sl.registerLazySingleton<AppStateCubit>(() => AppStateCubit(sl(),),);
     sl.registerFactory<ForgotPasswordCubit>(() => ForgotPasswordCubit(sl(),),);
     sl.registerFactory<UiCubit>(() => UiCubit());
+    sl.registerLazySingleton<HomeLayoutCubit>(() => HomeLayoutCubit());
+    sl.registerFactory<HomeCubit>(() => HomeCubit());
     //TODO: add new blocs
   }
 }
