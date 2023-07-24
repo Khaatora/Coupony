@@ -5,17 +5,18 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:maslaha/core/MVVM/repository/i_token_verification_repository.dart';
 import 'package:maslaha/core/constants/routes.dart';
 import 'package:maslaha/core/errors/failures/server_failure.dart';
+import 'package:maslaha/core/home_layout/view/home_layout.dart';
 import 'package:maslaha/core/services/secured_storage_data/secured_storage_data.dart';
 import 'package:maslaha/core/services/services_locator.dart';
 import 'package:maslaha/forgot_password/view/forgot_password_screen.dart';
 import 'package:maslaha/initial_preferences/view/initial_preferences_screen.dart';
+import 'package:maslaha/settings/views/settings_screen.dart';
 import 'package:maslaha/sign_in/view/login_screen.dart';
 import 'package:maslaha/sign_up/view/signup_screen.dart';
 import 'core/MVVM/model/app_state_model.dart';
 import 'core/global/theme.dart';
 import 'core/utils/enums/cache_enums.dart';
 import 'core/utils/enums/token_enums.dart';
-import 'home/view/home_screen.dart';
 
 late String route;
 
@@ -74,7 +75,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     FlutterNativeSplash.remove();
     return MaterialApp(
-      initialRoute: route,
+      initialRoute: Routes.home,
       theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
       onGenerateRoute: (settings) {
@@ -83,7 +84,8 @@ class _MyAppState extends State<MyApp> {
           Routes.forgotPassword: (context) => const ForgotPasswordScreen(),
           Routes.signup: (context) => const SignupScreen(),
           Routes.initInfo: (context) => const InitialPreferencesScreen(),
-          Routes.home: (context) => const HomeScreen(),
+          Routes.home: (context) => const HomeLayout(),
+          Routes.settings: (context) => const SettingsScreen(),
         };
         WidgetBuilder? builder = routes[settings.name];
         return MaterialPageRoute(builder: (ctx) => builder!(ctx));
