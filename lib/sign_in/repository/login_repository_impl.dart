@@ -25,15 +25,18 @@ class LoginRepositoryImpl extends ILoginRepository {
   @override
   Future<Either<ServerFailure, LoginResponse>> login(LoginParams params) async {
     try {
-      _checkInternetConnection();
+      if(!await _checkInternetConnection()) throw const InternetDisconnectedException();
       final result = await remoteDataSource.login(params);
       return Right(result);
     } on ServerException catch (serverFailure) {
-      log("${serverFailure.runtimeType}: ${serverFailure.message}");
+      log("SeverException Error");
+      // log("${serverFailure.runtimeType}: ${serverFailure.message}");
       return Left(ServerFailure(serverFailure.message));
-    } on DioError catch (dioFailure) {
-      log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.message!));
+    } on DioException catch (dioFailure) {
+      log("DioException Error");
+    log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
+      return Left(ServerFailure(
+          "response type: ${dioFailure.type},${dioFailure.response?.statusMessage ?? dioFailure.message ?? dioFailure.toString()}"));
     }
   }
 
@@ -42,7 +45,7 @@ class LoginRepositoryImpl extends ILoginRepository {
   @override
   Future<Either<ServerFailure, GuestLoginResponse>> guestLogin() async {
     try {
-      await _checkInternetConnection();
+      if(!await _checkInternetConnection()) throw const InternetDisconnectedException();
       final userAgent = await dipDeviceInfo
           .deviceInfo; // sets params device info using device info service
       final lang = FSSSecuredStorageData.tempCache[LoginJsonKeys.lang];
@@ -56,13 +59,14 @@ class LoginRepositoryImpl extends ILoginRepository {
     } on ServerException catch (serverFailure) {
       log("${serverFailure.runtimeType}: ${serverFailure.message}");
       return Left(ServerFailure(serverFailure.message));
-    } on DioError catch (dioFailure) {
+    } on DioException catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.message!));
+      return Left(ServerFailure(
+          "response type: ${dioFailure.type},${dioFailure.response?.statusMessage ?? dioFailure.message ?? dioFailure.toString()}"));
     }
   }
 
-  Future<void> _checkInternetConnection() async {
-    if (!await networkInfo.isConnected) throw const NoInternetException();
+  Future<bool> _checkInternetConnection() async {
+    return networkInfo.isConnected;
   }
 }

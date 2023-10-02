@@ -43,7 +43,6 @@ class _SignupViewState extends State<SignupView> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   late TextEditingController _confirmPasswordController;
-  late TextEditingController _genderController;
   late TextEditingController _dobController;
   final GlobalKey<FormState> _formKey1 = GlobalKey<FormState>();
 
@@ -56,7 +55,6 @@ class _SignupViewState extends State<SignupView> {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
-    _genderController = TextEditingController();
     _dobController = TextEditingController();
     _pageController = PageController();
     _codeController = TextEditingController();
@@ -68,7 +66,6 @@ class _SignupViewState extends State<SignupView> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
-    _genderController.dispose();
     _dobController.dispose();
     super.dispose();
   }
@@ -438,7 +435,7 @@ class _SignupViewState extends State<SignupView> {
                                       ElevatedButton(
                                         onPressed: _verifyCode,
                                         child: const Text(
-                                            EnglishLocalization.confirmCode),
+                                            EnglishLocalization.confirmText),
                                       ),
                                     ],
                                   );
@@ -507,8 +504,7 @@ class _SignupViewState extends State<SignupView> {
       await SignupCubit.get(context).verifyEmail(
           _emailController.text,
           _passwordController.text,
-          _dobController.text,
-          _genderController.text);
+          _dobController.text,);
     }
   }
 
@@ -526,4 +522,5 @@ class _SignupViewState extends State<SignupView> {
           .then((value) => SignupCubit.get(context).signUp());
     }
   }
+
 }

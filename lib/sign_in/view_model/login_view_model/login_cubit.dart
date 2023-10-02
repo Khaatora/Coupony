@@ -1,7 +1,10 @@
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maslaha/core/utils/enums/loading_enums.dart';
 
+import '../../../core/home_layout/view_model/home_layout_cubit.dart';
+import '../../../core/services/services_locator.dart';
 import '../../repository/i_login_repository.dart';
 
 part 'login_state.dart';
@@ -25,7 +28,10 @@ class LoginCubit extends Cubit<LoginState> {
     result.fold(
       (l) => emit(
           state.copyWith(message: l.message, loadingState: LoadingState.error)),
-      (r) {
+      (r) async {
+        if(!sl.isRegistered<HomeLayoutCubit>()){
+          sl.registerLazySingleton<HomeLayoutCubit>(() => HomeLayoutCubit(sl()));
+        }
         emit(state.copyWith(
           loadingState: LoadingState.loaded,
         ));
@@ -41,7 +47,10 @@ class LoginCubit extends Cubit<LoginState> {
     result.fold(
       (l) => emit(
           state.copyWith(message: l.message, loadingState: LoadingState.error)),
-      (r) {
+      (r) async {
+        if(!sl.isRegistered<HomeLayoutCubit>()){
+          sl.registerLazySingleton<HomeLayoutCubit>(() => HomeLayoutCubit(sl()));
+        }
         emit(state.copyWith(
           loadingState: LoadingState.loaded,
         ));

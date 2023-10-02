@@ -7,9 +7,9 @@ class GenericAPIException extends ServerException{
   const GenericAPIException([super.message = EnglishLocalization.genericErrorMessage]);
 }
 
-class NoInternetException extends ServerException{
+class InternetDisconnectedException extends ServerException{
 
-  const NoInternetException([super.message = EnglishLocalization.noInternetErrorMessage]);
+  const InternetDisconnectedException([super.message = EnglishLocalization.noInternetErrorMessage]);
 }
 
 class MissingTokenException extends ServerException{
@@ -23,4 +23,32 @@ class ExpiredTokenException extends ServerException{
 class InvalidTokenException extends ServerException{
 
   const InvalidTokenException([super.message = EnglishLocalization.invalidTokenErrorMessage]);
+}
+class InvalidCredentialsException extends ServerException{
+
+  const InvalidCredentialsException([super.message = EnglishLocalization.invalidCredentialsErrorMessage]);
+}
+class IncorrectVerificationCodeException extends ServerException{
+
+  const IncorrectVerificationCodeException([super.message = EnglishLocalization.incorrectVerificationCodeErrorMessage]);
+}
+class EmailAlreadyInUseException extends ServerException{
+
+  const EmailAlreadyInUseException([super.message = EnglishLocalization.incorrectVerificationCodeErrorMessage]);
+}
+class SessionExpiredException extends ServerException{
+
+  const SessionExpiredException([super.message = EnglishLocalization.incorrectVerificationCodeErrorMessage]);
+}
+class InvalidEmailException extends ServerException{
+
+  const InvalidEmailException([super.message = EnglishLocalization.invalidEmailErrorMessage]);
+}
+class SessionNotVerifiedException extends ServerException{
+
+  const SessionNotVerifiedException([super.message = EnglishLocalization.sessionNotVerifiedErrorMessage]);
+}
+class PasswordAlreadyUsedException extends ServerException{
+
+  const PasswordAlreadyUsedException([super.message = EnglishLocalization.passwordAlreadyUsedErrorMessage]);
 }

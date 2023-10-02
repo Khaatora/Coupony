@@ -16,7 +16,7 @@ class CodeVerificationResponse extends Equatable{
   factory CodeVerificationResponse.fromJson(Map<String, dynamic> json) {
     return CodeVerificationResponse(
       status: json[CodeVerificationJsonKeys.status],
-      sessionId: json[CodeVerificationJsonKeys.sessionId],
+      sessionId: json[CodeVerificationJsonKeys.sessionId] ?? "",
       message: json[CodeVerificationJsonKeys.message],
     );
   }

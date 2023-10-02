@@ -4,7 +4,7 @@ import 'package:maslaha/core/errors/exceptions/cache_exception.dart';
 import 'package:maslaha/core/errors/failures/server_failure.dart';
 import 'package:maslaha/core/services/secured_storage_data/secured_storage_data.dart';
 import 'package:maslaha/core/utils/enums/cache_enums.dart';
-import 'package:maslaha/initial_preferences/model/user_settings_params.dart';
+import 'package:maslaha/core/home_layout/model/user_data_params.dart';
 import 'package:maslaha/initial_preferences/repository/i_initial_preferences_repository.dart';
 import '../model/datasource/local/local_data_source.dart';
 import '../../core/MVVM/model/user_settings_response.dart';

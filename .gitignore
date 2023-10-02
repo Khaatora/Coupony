@@ -43,5 +43,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-#test fixtures
-/test/fixtures
+#ignore test
+/test/
+/test/widget_test.dart
+/test/sign_in/repository/login_repository_impl_test.dart

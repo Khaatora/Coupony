@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:maslaha/core/errors/failures/server_failure.dart';
 import 'package:maslaha/core/services/secured_storage_data/secured_storage_data.dart';
-import 'package:maslaha/sign_up/model/code_verification_response.dart';
+import 'package:maslaha/core/MVVM/model/code_verification_response.dart';
 import 'package:maslaha/sign_up/model/email_verification_response.dart';
 import 'package:maslaha/sign_up/model/signup_response.dart';
 import '../../core/constants/cache_constants.dart';
@@ -25,37 +25,39 @@ class SignupRepositoryImpl extends ISignupRepository {
   @override
   Future<Either<ServerFailure, SignupResponse>> signup(SignupParams params) async {
     try {
-      await _checkInternetConnection();
+      if(!await _checkInternetConnection()) throw const InternetDisconnectedException();
       final result = await remoteDataSource.signup(params);
       return Right(result);
     } on ServerException catch (serverFailure) {
       log("${serverFailure.runtimeType}: ${serverFailure.message}");
       return Left(ServerFailure(serverFailure.message));
-    } on DioError catch (dioFailure) {
+    } on DioException catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.message!));
+      return Left(ServerFailure(
+          "response type: ${dioFailure.type},${dioFailure.response?.statusMessage ?? dioFailure.message ?? dioFailure.toString()}"));
     }
   }
 
   @override
   Future<Either<ServerFailure, CodeVerificationResponse>> verifyCode(CodeVerificationParams params) async {
     try {
-      await _checkInternetConnection();
+      if(!await _checkInternetConnection()) throw const InternetDisconnectedException();
       final result = await remoteDataSource.verifyCode(params);
       return Right(result);
     } on ServerException catch (serverFailure) {
       log("${serverFailure.runtimeType}: ${serverFailure.message}");
       return Left(ServerFailure(serverFailure.message));
-    } on DioError catch (dioFailure) {
+    } on DioException catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.message!));
+      return Left(ServerFailure(
+          "response type: ${dioFailure.type},${dioFailure.response?.statusMessage ?? dioFailure.message ?? dioFailure.toString()}"));
     }
   }
 
   @override
   Future<Either<ServerFailure, EmailVerificationResponse>> verifyEmail(EmailVerificationParams params) async {
     try {
-      await _checkInternetConnection();
+      if(!await _checkInternetConnection()) throw const InternetDisconnectedException();
       params.userAgent = await dipDeviceInfo.deviceInfo; // sets params device info using device info service
       params.lang = FSSSecuredStorageData.tempCache[CachedJsonKeys.lang];
       final result = await remoteDataSource.verifyEmail(params);
@@ -63,14 +65,15 @@ class SignupRepositoryImpl extends ISignupRepository {
     } on ServerException catch (serverFailure) {
       log("${serverFailure.runtimeType}: ${serverFailure.message}");
       return Left(ServerFailure(serverFailure.message));
-    } on DioError catch (dioFailure) {
+    } on DioException catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.message!));
+      return Left(ServerFailure(
+          "response type: ${dioFailure.type},${dioFailure.response?.statusMessage ?? dioFailure.message ?? dioFailure.toString()}"));
     }
   }
 
-  Future<void> _checkInternetConnection() async {
-    if (!await networkInfo.isConnected) throw const NoInternetException();
+  Future<bool> _checkInternetConnection() async {
+    return networkInfo.isConnected;
   }
 
 }

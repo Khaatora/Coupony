@@ -8,7 +8,7 @@ import 'package:maslaha/core/services/secured_storage_data/secured_storage_data.
 
 import '../../../../core/services/services_locator.dart';
 import '../../../repository/i_signup_repository.dart';
-import '../../code_verification_response.dart';
+import '../../../../core/MVVM/model/code_verification_response.dart';
 import '../../email_verification_response.dart';
 import '../../signup_response.dart';
 
@@ -43,9 +43,10 @@ class APISignupRemoteDataSource extends ISignupRemoteDataSource {
       case 200:
         securedStorageData.addToken(response.data[SignupJsonKeys.jwt]);
         return SignupResponse.fromJson(response.data);
-      // TODO: other cases
-      // case 400:
-      // case 401:
+      case 400:
+        throw  SessionExpiredException(response.data["message"] as String);
+      case 401:
+        throw SessionNotVerifiedException(response.data["message"] as String);
       default:
         throw const GenericAPIException();
     }
@@ -62,9 +63,8 @@ class APISignupRemoteDataSource extends ISignupRemoteDataSource {
     switch (response.statusCode) {
       case 200:
         return CodeVerificationResponse.fromJson(response.data);
-    // TODO: other cases
-    // case 400:
-    // case 401:
+      case 404:
+        throw IncorrectVerificationCodeException(response.data["message"] as String);
       default:
         throw const GenericAPIException();
     }
@@ -81,9 +81,8 @@ class APISignupRemoteDataSource extends ISignupRemoteDataSource {
     switch (response.statusCode) {
       case 200:
         return EmailVerificationResponse.fromJson(response.data);
-    // TODO: other cases
-    // case 400:
-    // case 401:
+      case 405:
+        throw EmailAlreadyInUseException(response.data["message"] as String);
       default:
         throw const GenericAPIException();
     }

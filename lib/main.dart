@@ -1,30 +1,41 @@
 import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:maslaha/core/MVVM/repository/i_token_verification_repository.dart';
 import 'package:maslaha/core/constants/routes.dart';
 import 'package:maslaha/core/errors/failures/server_failure.dart';
+import 'package:maslaha/core/home_layout/view/home_layout.dart';
+import 'package:maslaha/core/services/firebase/firebase_api.dart';
 import 'package:maslaha/core/services/secured_storage_data/secured_storage_data.dart';
 import 'package:maslaha/core/services/services_locator.dart';
 import 'package:maslaha/forgot_password/view/forgot_password_screen.dart';
 import 'package:maslaha/initial_preferences/view/initial_preferences_screen.dart';
+import 'package:maslaha/settings/views/settings_screen.dart';
 import 'package:maslaha/sign_in/view/login_screen.dart';
 import 'package:maslaha/sign_up/view/signup_screen.dart';
 import 'core/MVVM/model/app_state_model.dart';
 import 'core/global/theme.dart';
 import 'core/utils/enums/cache_enums.dart';
 import 'core/utils/enums/token_enums.dart';
-import 'home/view/home_screen.dart';
+import 'firebase_options.dart';
 
 late String route;
 
 void main() async {
   final WidgetsBinding widgetsBinding =
       WidgetsFlutterBinding.ensureInitialized();
+
+  // uncomment to simulate IOS behavior and uncomment theme's TargetPlatform
+  // debugDefaultTargetPlatformOverride  = TargetPlatform.iOS;
   ServicesLocator().init();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await sl<FirebaseApi>().initNotifications();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  // await sl<ISecuredStorageData>().deleteCachedLoggedInUserSettings();
+  // await sl<ISecuredStorageData>().deleteAll();
   final result = await sl<ITokenVerificationRepository>().validateToken();
   await FSSSecuredStorageData.cacheTmpCache();
   // sl<ISecuredStorageData>().readAll();
@@ -32,6 +43,7 @@ void main() async {
       (l) => {l is ServerFailure ? route = Routes.login : Routes.initInfo},
       (r) => route = _determineRoute(r));
   log(route);
+  //default device orientation
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -71,7 +83,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     FlutterNativeSplash.remove();
     return MaterialApp(
-      initialRoute: route,
+      initialRoute: Routes.home,
       theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
       onGenerateRoute: (settings) {
@@ -80,7 +92,8 @@ class _MyAppState extends State<MyApp> {
           Routes.forgotPassword: (context) => const ForgotPasswordScreen(),
           Routes.signup: (context) => const SignupScreen(),
           Routes.initInfo: (context) => const InitialPreferencesScreen(),
-          Routes.home: (context) => const HomeScreen(),
+          Routes.home: (context) => const HomeLayout(),
+          Routes.settings: (context) => const SettingsScreen(),
         };
         WidgetBuilder? builder = routes[settings.name];
         return MaterialPageRoute(builder: (ctx) => builder!(ctx));

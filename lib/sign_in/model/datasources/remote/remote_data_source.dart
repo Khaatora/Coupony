@@ -40,9 +40,9 @@ class APILoginRemoteDataSource extends ILoginRemoteDataSource {
         securedStorageData.addToken(response.data[LoginJsonKeys.jwt]);
         securedStorageData.cacheLoggedInUserSettings(response.data[LoginJsonKeys.userSettings]);
         return LoginResponse.fromJson(response.data);
-      // TODO: other cases
-      // case 400:
-      // case 401:
+      case 406:
+        throw Exception("something went wrong");
+        throw InvalidCredentialsException(response.data["message"] as String);
       default:
         throw const GenericAPIException();
     }
@@ -60,9 +60,6 @@ class APILoginRemoteDataSource extends ILoginRemoteDataSource {
         securedStorageData.addToken(response.data[GuestLoginKeys.jwt]);
         securedStorageData.cacheLoggedInUserSettings(response.data[GuestLoginKeys.userSettings]);
         return GuestLoginResponse.fromJson(response.data);
-    // TODO: other cases
-    // case 400:
-    // case 401:
       default:
         throw const GenericAPIException();
     }

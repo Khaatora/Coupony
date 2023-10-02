@@ -1,3 +1,9 @@
+
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:maslaha/core/constants/cache_constants.dart';
+
 import '../../../services/secured_storage_data/secured_storage_data.dart';
 import '../../../utils/enums/cache_enums.dart';
 import '../token_cache_response.dart';
@@ -29,8 +35,9 @@ class FSSTokenVerificationLocalDataSource extends ITokenVerificationLocalDataSou
   @override
   Future<UserSettingsResponse> getCachedUserSettings() async {
     final cacheTemp = await securedStorageData.loggedInUserData;
+    log(cacheTemp.toString());
     if(cacheTemp != null){
-      return UserSettingsResponse.fromJson(cacheTemp);
+      return UserSettingsResponse.fromJson(jsonDecode(cacheTemp[CachedJsonKeys.cachedLoggedInUserDataKey]));
     }
     else{
       return const UserSettingsResponse(lang: "", region: "", state: CacheState.empty);

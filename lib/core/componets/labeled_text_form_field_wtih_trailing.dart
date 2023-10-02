@@ -30,23 +30,21 @@ class LabeledTextFormFieldWithTrailing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: TextFormField(
-        controller: textEditingController,
-        textInputAction: textInputAction,
-        keyboardType: textInputType,
-        decoration: InputDecoration(
-            suffixIcon: trailing,
-            suffixIconColor: Colors.black,
-            hintText: hintText,
-            hintStyle: Theme.of(context).textTheme.titleMedium,),
-        validator: validator,
-        obscureText: obscureText,
-        enableSuggestions: enableSuggestions,
-        autocorrect: autocorrect,
-        onTap: onTap,
-        readOnly: readOnly,
-      ),
+    return TextFormField(
+      controller: textEditingController,
+      textInputAction: textInputAction,
+      keyboardType: textInputType,
+      decoration: InputDecoration(
+          suffixIcon: trailing,
+          suffixIconColor: Colors.black,
+          hintText: hintText,
+          hintStyle: Theme.of(context).textTheme.titleMedium,),
+      validator: validator,
+      obscureText: obscureText,
+      enableSuggestions: enableSuggestions,
+      autocorrect: autocorrect,
+      onTap: onTap,
+      readOnly: readOnly,
     );
   }
 }

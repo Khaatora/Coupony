@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maslaha/core/utils/enums/cache_enums.dart';
 import 'package:maslaha/core/utils/enums/loading_enums.dart';
-import 'package:maslaha/initial_preferences/model/user_settings_params.dart';
+import 'package:maslaha/core/home_layout/model/user_data_params.dart';
 
 import '../repository/i_initial_preferences_repository.dart';
 
@@ -25,7 +25,7 @@ class InitialPreferencesCubit extends Cubit<InitialPreferencesState> {
 
   static List<String> get languages => ["Arabic", "English"];
 
-  static List<String> get regions => ["EG", "USA"];
+  static List<String> get regions => ["GCC", "EG"];
 
 
   void setRegions(String region) {
@@ -35,7 +35,7 @@ class InitialPreferencesCubit extends Cubit<InitialPreferencesState> {
   void init() {
     emit(state.copyWith(
         regionOnChanged: _regionOnChanged,
-        languageOnChanged: _langaugeOnChanged));
+        languageOnChanged: _languageOnChanged));
   }
 
   Future<void> cacheData() async {
@@ -53,7 +53,7 @@ class InitialPreferencesCubit extends Cubit<InitialPreferencesState> {
             cacheState: CacheState.init,
             loadingState: LoadingState.error,
             allowDoneButton: true,
-            languageOnChanged: _langaugeOnChanged,
+            languageOnChanged: _languageOnChanged,
             regionOnChanged: _regionOnChanged,
             message: l.message)),
         (r) => emit(state.copyWith(
@@ -79,7 +79,7 @@ class InitialPreferencesCubit extends Cubit<InitialPreferencesState> {
             )));
   }
 
-  void _langaugeOnChanged(lang) {
+  void _languageOnChanged(lang) {
     setLanguage(lang!);
   }
 

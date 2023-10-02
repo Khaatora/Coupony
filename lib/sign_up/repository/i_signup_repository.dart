@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:maslaha/core/errors/failures/server_failure.dart';
-import '../model/code_verification_response.dart';
+import '../../core/MVVM/model/code_verification_response.dart';
 import '../model/email_verification_response.dart';
 import '../model/signup_response.dart';
 
@@ -35,6 +35,7 @@ class EmailVerificationParams {
   String lang;
   String userAgent;
   final String dob;
+  final String gender;
 
    EmailVerificationParams(
        {this.email = "ahosari20@gmail.com",
@@ -42,7 +43,8 @@ class EmailVerificationParams {
     this.region= "EG",
     this.lang= "arabic",
     this.userAgent= "Maslaha/1.0.0 Model/Moto G (4)",
-    this.dob= "2000-05-04",}
+    this.dob= "2000-05-04",
+       this.gender = "Male",}
   );
 
   Map<String, dynamic> toJson() {
@@ -53,7 +55,7 @@ class EmailVerificationParams {
       EmailVerificationJsonKeys.lang: lang,
       EmailVerificationJsonKeys.userAgent: userAgent,
       EmailVerificationJsonKeys.dob: dob,
-
+      EmailVerificationJsonKeys.gender: gender,
     };
   }
 }
