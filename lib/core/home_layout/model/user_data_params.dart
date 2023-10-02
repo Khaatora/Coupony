@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 
-import '../../core/constants/cache_constants.dart';
+import '../../constants/cache_constants.dart';
 
 class UserSettingsParams extends Equatable {
   final String lang;

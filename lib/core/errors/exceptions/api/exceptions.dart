@@ -7,9 +7,9 @@ class GenericAPIException extends ServerException{
   const GenericAPIException([super.message = EnglishLocalization.genericErrorMessage]);
 }
 
-class NoInternetException extends ServerException{
+class InternetDisconnectedException extends ServerException{
 
-  const NoInternetException([super.message = EnglishLocalization.noInternetErrorMessage]);
+  const InternetDisconnectedException([super.message = EnglishLocalization.noInternetErrorMessage]);
 }
 
 class MissingTokenException extends ServerException{

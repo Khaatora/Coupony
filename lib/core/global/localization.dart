@@ -37,15 +37,28 @@ class EnglishLocalization {
   static const String checkEmail = "Checking email, please wait...";
 
   //home_layout
+  static const String somethingWentWrongLoadingData = "Something went wrong, please make sure you have a stable internet connection and try again";
+  static const String tryAgainButton = "Reload";
+  static const String pleaseWaitAMoment = "Please wait a moment";
+  static const String search = "Search";
+  static const String writeAtleastTwoCharacters = "Write at least two characters";
+  static const String visitStore = "Visit Store";
+  static const String noMatchedStore = "couldn't find a store with that name";
+  static const String addToFavorites = "Add to favorites";
+  static const String getCode = "Get code";
     //home tab
-    static const String search = "Search";
     static const String topStores = "Top stores";
+    static const String topDeals = "Top Deals";
+    static const String newArrivals = "New Arrivals";
+    static const String todaysDeals = "Today's Deals";
     //coupon tab
     static const String coupons = "Coupons";
-    //favourites tab
-    static const String favourites = "Favourites";
+    static const String coudlntFindAnyStores = "couldn't find any stores";
+    //favorites tab
+    static const String favorites = "Favorites";
+    static const String youHaveNoFavorites = "You have no favorites";
     //for you tab
-    static const String for_you = "For You";
+    static const String forYou = "For You";
 
   //validation
   static const String enterValidEmail = "Enter valid Email";
@@ -65,10 +78,19 @@ class EnglishLocalization {
   static const String sessionNotVerifiedErrorMessage = "session not verified";
   static const String invalidEmailErrorMessage = "Email does not exist in our records";
   static const String sessionExpiredErrorMessage = "Signup session expired, please signup again";
-  static const String emailAlreadyInUseErrorMessage = "Email already in use, try another Email";static const String pleaseChooseYourLocationAndLanguage = "Please choose your location & language";
+  static const String emailAlreadyInUseErrorMessage = "Email already in use, try another Email";
+  static const String pleaseChooseYourLocationAndLanguage = "Please choose your location & language";
+  static const String serverTookToLongToRespond = "Server took too long to response, please make sure you have a stable internet connection and try again";
+  static const String couldntRemoveFromFavoriteServerNotResponsive = "Couldn't remove from favorites, server is taking too long";
+  static const String couldntAddToFavoritesServerNotResponsive = "Couldn't add to favorites, server is taking too long";
 
   // init app screen
   static const String language = "Language";
   static const String region = "Region";
   static const String done = "Continue";
+
+
+  //utilities
+    //couponDialog
+  static const String copy = "Copy";
 }

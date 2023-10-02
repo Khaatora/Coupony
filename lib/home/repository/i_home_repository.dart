@@ -1,21 +1,22 @@
 import 'package:dartz/dartz.dart';
 import 'package:maslaha/core/errors/failures/server_failure.dart';
+import 'package:maslaha/home/model/get_banner_response.dart';
 
-import '../model/get_data_campaigns_response.dart';
 
 abstract class IHomeRepository{
 
-  Future<Either<ServerFailure,GetDataCampaignsResponse>> getDataCampaigns();
+
+  Future<Either<ServerFailure,GetBannerResponse>> getBannerData(GetBannerParams params);
 }
 
-class GetCampaignsParams{
-  final String? region;
+class GetBannerParams{
+  final String region;
 
-  GetCampaignsParams(this.region);
+  GetBannerParams(this.region);
 
   Map<String, dynamic> toJson() {
     return {
-      GetDataCampaignsJsonKeys.region: region,
+      GetBannerJsonKeys.region: region,
     };
   }
 }

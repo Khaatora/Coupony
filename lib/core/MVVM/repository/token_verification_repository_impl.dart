@@ -28,7 +28,7 @@ class TokenVerificationRepositoryImpl implements ITokenVerificationRepository{
   @override
   Future<Either<IFailure, AppStateModel>> validateToken() async {
     try {
-      await _checkInternetConnection();
+      if(!await _checkInternetConnection()) throw const InternetDisconnectedException();
       final token = await tokenVerificationLocalDataSource.getToken();
       final cachedSettings = await tokenVerificationLocalDataSource.getCachedUserSettings();
       if(cachedSettings.state == CacheState.empty){
@@ -54,14 +54,15 @@ class TokenVerificationRepositoryImpl implements ITokenVerificationRepository{
       }
     } on CacheException catch (failure){
       return Left(CacheFailure(failure.message));
-    } on DioError catch (dioFailure) {
+    } on DioException catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.response!.data["message"] ?? dioFailure.message));
+      return Left(ServerFailure(
+          "response type: ${dioFailure.type},${dioFailure.response?.statusMessage ?? dioFailure.message ?? dioFailure.toString()}"));
     }
   }
 
 
-  Future<void> _checkInternetConnection() async {
-    if (!await networkInfo.isConnected) throw const NoInternetException();
+  Future<bool> _checkInternetConnection() async {
+    return networkInfo.isConnected;
   }
 }

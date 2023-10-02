@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maslaha/core/global/colors.dart';
+import 'package:maslaha/core/home_layout/view_model/home_layout_cubit.dart';
+import 'package:maslaha/home/model/get_banner_response.dart';
 import 'package:maslaha/home/view_model/home_cubit.dart';
 
-import '../../../core/constants/app_images.dart';
 
 class CarouselImgsSlider extends StatelessWidget {
   const CarouselImgsSlider({
@@ -12,7 +15,7 @@ class CarouselImgsSlider extends StatelessWidget {
     required this.imgList,
   }) : super(key: key);
   final int currentIndex;
-  final List<String> imgList;
+  final List<BannerData> imgList;
 
   @override
   Widget build(BuildContext context) {
@@ -23,20 +26,18 @@ class CarouselImgsSlider extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(25),
             child: CarouselSlider(
-              items: AppImages.carouselImages
-                  .map((img) => Builder(
-                        builder: (context) {
-                          return Image.network(
-                            img,
-                            fit: BoxFit.cover,
-                            height: 200,
-                          );
-                        },
-                      ))
+              items: imgList
+                  .map((img) => InkWell(
+                      onTap: () async {
+                        await HomeLayoutCubit.get(context).getCoupon(img.channel, img.campaignId);
+                      },
+                      child: CachedNetworkImage(
+                        imageUrl: img.banner,
+                        fit: BoxFit.fitHeight,
+                      )))
                   .toList(),
               options: CarouselOptions(
                 viewportFraction: 1,
-                height: 200,
                 autoPlay: true,
                 onPageChanged: (index, reason) {
                   HomeCubit.get(context).setCurrentImgIndex(index);
@@ -63,7 +64,7 @@ class CarouselImgsSlider extends StatelessWidget {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: state.currentShownImgIndex == index
-                            ? const Color.fromRGBO(0, 0, 0, 0.9)
+                            ? AppColor.primaryColor
                             : const Color.fromRGBO(0, 0, 0, 0.4)),
                   );
                 }).toList(),

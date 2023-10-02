@@ -71,7 +71,6 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 _firstPage();
                 break;
               case PasswordResetState.verifyingEmail:
-                context.hideCurrentSnackBar();
                 context.showCustomSnackBar(
                   EnglishLocalization.checkEmail,
                   const Duration(seconds: 1),
@@ -81,7 +80,6 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 _pageForward();
                 break;
               case PasswordResetState.verifyingCode:
-                context.hideCurrentSnackBar();
                 context.showCustomSnackBar(
                   EnglishLocalization.verifyingCode,
                   const Duration(seconds: 1),
@@ -91,14 +89,12 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 _pageForward();
                 break;
               case PasswordResetState.finishingUp:
-                context.hideCurrentSnackBar();
                 context.showCustomSnackBar(
                   EnglishLocalization.resettingPassword,
                   const Duration(seconds: 1),
                 );
                 break;
               case PasswordResetState.success:
-                context.hideCurrentSnackBar();
                 context.showCustomSnackBar(
                   EnglishLocalization.resetSuccessfully,
                   const Duration(seconds: 1),

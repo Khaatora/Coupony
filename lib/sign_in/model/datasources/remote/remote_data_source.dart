@@ -41,6 +41,7 @@ class APILoginRemoteDataSource extends ILoginRemoteDataSource {
         securedStorageData.cacheLoggedInUserSettings(response.data[LoginJsonKeys.userSettings]);
         return LoginResponse.fromJson(response.data);
       case 406:
+        throw Exception("something went wrong");
         throw InvalidCredentialsException(response.data["message"] as String);
       default:
         throw const GenericAPIException();

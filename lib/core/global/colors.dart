@@ -7,6 +7,7 @@ class AppColor{
   static final Color selectedNavBarColor =  HexColor("#182F43");
   static const Color unselectedNavBarColor =  Colors.white;
   static final Color backgroundColor =  HexColor("#00AF87");
+
   static final appBarGradient = LinearGradient(
     colors: [
       HexColor("#00AF87"),
@@ -20,6 +21,8 @@ class AppColor{
   static const Color black = Colors.black;
   static const Color white = Colors.white;
   static const Color red = Colors.red;
+  static const Color transparent = Colors.transparent;
+  static final Color navyBlue =  HexColor("#182F43");
 
 
 

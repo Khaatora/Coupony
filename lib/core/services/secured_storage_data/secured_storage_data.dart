@@ -24,7 +24,7 @@ abstract class ISecuredStorageData {
 
   Future<void> deleteAll();
 
-  Future<Map<String, String>> readAll();
+  Future<Map<String, dynamic>?> readAll();
 }
 
 class FSSSecuredStorageData extends ISecuredStorageData {
@@ -37,7 +37,7 @@ class FSSSecuredStorageData extends ISecuredStorageData {
   static Future<void> cacheTmpCache() async {
     final tmpResult = await sl<FlutterSecureStorage>().readAll();
     log("CACHING tempCACHE ENDPOINT.....");
-    if(tmpResult[SecuredStorageKeys.cachedLoggedInUserDataKey]!= null){
+    if (tmpResult[SecuredStorageKeys.cachedLoggedInUserDataKey] != null) {
       tempCache.addAll(json
           .decode(tmpResult[SecuredStorageKeys.cachedLoggedInUserDataKey]!));
       tempCache.forEach((key, value) {
@@ -49,9 +49,12 @@ class FSSSecuredStorageData extends ISecuredStorageData {
   const FSSSecuredStorageData(this._storage);
 
   @override
-  Future<Map<String, String>> readAll() async {
-    final tmpResult= await _storage.readAll();
-
+  Future<Map<String, dynamic>?> readAll() async {
+    final tmpResult = await _storage.readAll();
+    if(tmpResult.isEmpty){
+      return null;
+    }
+    log(tmpResult.toString());
     return tmpResult;
   }
 
@@ -75,7 +78,7 @@ class FSSSecuredStorageData extends ISecuredStorageData {
     final jsonString = await _storage.read(
       key: SecuredStorageKeys.cachedLoggedInUserDataKey,
     );
-    if(jsonString !=null) {
+    if (jsonString != null) {
       log(json.decode(jsonString).toString());
       return json.decode(jsonString);
     } else {
@@ -83,10 +86,11 @@ class FSSSecuredStorageData extends ISecuredStorageData {
     }
   }
 
-
   @override
   Future<void> deleteCachedLoggedInUserSettings() async {
-    return _storage.delete( key: SecuredStorageKeys.cachedLoggedInUserDataKey,);
+    return _storage.delete(
+      key: SecuredStorageKeys.cachedLoggedInUserDataKey,
+    );
   }
 
   @override
@@ -112,8 +116,7 @@ class FSSSecuredStorageData extends ISecuredStorageData {
       );
 
   @override
-  Future<Map<String, dynamic>?> get loggedInUserData =>
-      _getCachedLoggedInUserSettings();
+  Future<Map<String, dynamic>?> get loggedInUserData => readAll();
 
   @override
   Future<String?> get token => _getToken();
@@ -129,9 +132,6 @@ class FSSSecuredStorageData extends ISecuredStorageData {
       key: key,
     );
   }
-
-
-
 }
 
 class SecuredStorageKeys {

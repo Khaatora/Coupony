@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:maslaha/core/home_layout/model/get_data_campaigns_response.dart';
 import 'package:maslaha/core/home_layout/view/components/reusable_components/img_container.dart';
 
+import '../../../core/home_layout/view_model/home_layout_cubit.dart';
+
 class LabeledList extends StatelessWidget {
-  const LabeledList({super.key, required this.text, this.imgList = const [
-    "https://mir-s3-cdn-cf.behance.net/projects/404/1cb86469753415.Y3JvcCwxMTUwLDg5OSwxMzc1LDY0Mw.jpg",
-    "https://mir-s3-cdn-cf.behance.net/projects/404/1cb86469753415.Y3JvcCwxMTUwLDg5OSwxMzc1LDY0Mw.jpg",
-    "https://mir-s3-cdn-cf.behance.net/projects/404/1cb86469753415.Y3JvcCwxMTUwLDg5OSwxMzc1LDY0Mw.jpg",
-    "https://mir-s3-cdn-cf.behance.net/projects/404/1cb86469753415.Y3JvcCwxMTUwLDg5OSwxMzc1LDY0Mw.jpg",
-    "https://mir-s3-cdn-cf.behance.net/projects/404/1cb86469753415.Y3JvcCwxMTUwLDg5OSwxMzc1LDY0Mw.jpg",
-  ]});
+  const LabeledList({super.key, required this.text, required this.getDataCampaignResponse, required this.channel });
 
   final String text;
-  final List<String> imgList;
+  final GetDataCampaignsResponse getDataCampaignResponse;
+  final String channel;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +24,11 @@ class LabeledList extends StatelessWidget {
               height: 130,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: imgList.length,
+                itemCount: getDataCampaignResponse.campaigns.length,
                 itemBuilder: (context, index) {
-                return ImgContainer(imgLink: imgList[index],);
+                return GestureDetector(onTap: () async {
+                  await HomeLayoutCubit.get(context).getCoupon(channel, getDataCampaignResponse.campaigns[index].data.campaignId);
+                },child: ImgContainer(imgLink: getDataCampaignResponse.campaigns[index].logo.url,));
               },),
             ),
           ),

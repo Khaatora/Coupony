@@ -1,3 +1,5 @@
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ImgContainer extends StatelessWidget {
@@ -19,17 +21,15 @@ class ImgContainer extends StatelessWidget {
       child: Material(
         elevation: 5.0,
         borderRadius: BorderRadius.circular(25),
-        child: Container(
-          width: width,
-          height: height,
+        child: CachedNetworkImage(imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
             image: DecorationImage(
-              image: Image.network(imgLink).image,
+              image: imageProvider,
               fit: BoxFit.cover,
             ),
           ),
-        ),
+        ),imageUrl: imgLink, width: width,),
       ),
     );
   }

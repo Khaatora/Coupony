@@ -25,49 +25,52 @@ class ForgotPasswordRepositoryImpl extends IForgotPasswordRepository{
   @override
   Future<Either<IFailure, InitiatePasswordResetResponse>> initiatePasswordReset(InitiatePasswordResetParams params) async {
     try {
-      await _checkInternetConnection();
+      if(!await _checkInternetConnection()) throw const InternetDisconnectedException();
       final result = await remoteDataSource.initiatePasswordReset(params);
       return Right(result);
     } on ServerException catch (serverFailure) {
       log("${serverFailure.runtimeType}: ${serverFailure.message}");
       return Left(ServerFailure(serverFailure.message));
-    } on DioError catch (dioFailure) {
+    } on DioException catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.response!.data["message"] ?? dioFailure.message));
+      return Left(ServerFailure(
+          "response type: ${dioFailure.type},${dioFailure.response?.statusMessage ?? dioFailure.message ?? dioFailure.toString()}"));
     }
   }
 
   @override
   Future<Either<ServerFailure, CodeVerificationResponse>> verifyCode(CodeVerificationParams params) async {
     try {
-      await _checkInternetConnection();
+      if(!await _checkInternetConnection()) throw const InternetDisconnectedException();
       final result = await remoteDataSource.verifyCode(params);
       return Right(result);
     } on ServerException catch (serverFailure) {
       log("${serverFailure.runtimeType}: ${serverFailure.message}");
       return Left(ServerFailure(serverFailure.message));
-    } on DioError catch (dioFailure) {
+    } on DioException catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.response!.data["message"] ?? dioFailure.message));
+      return Left(ServerFailure(
+          "response type: ${dioFailure.type},${dioFailure.response?.statusMessage ?? dioFailure.message ?? dioFailure.toString()}"));
     }
   }
 
   @override
   Future<Either<IFailure, ResetPasswordResponse>> resetPassword(ResetPasswordParams params) async {
     try {
-      await _checkInternetConnection();
+      if(!await _checkInternetConnection()) throw const InternetDisconnectedException();
       final result = await remoteDataSource.resetPassword(params);
       return Right(result);
     } on ServerException catch (serverFailure) {
       log("${serverFailure.runtimeType}: ${serverFailure.message}");
       return Left(ServerFailure(serverFailure.message));
-    } on DioError catch (dioFailure) {
+    } on DioException catch (dioFailure) {
       log("${dioFailure.runtimeType}: ${dioFailure.message}, ${dioFailure.stackTrace}");
-      return Left(ServerFailure(dioFailure.response!.data["message"] ?? dioFailure.message));
+      return Left(ServerFailure(
+          "response type: ${dioFailure.type},${dioFailure.response?.statusMessage ?? dioFailure.message ?? dioFailure.toString()}"));
     }
   }
 
-  Future<void> _checkInternetConnection() async {
-    if (!await networkInfo.isConnected) throw const NoInternetException();
+  Future<bool> _checkInternetConnection() async {
+    return networkInfo.isConnected;
   }
 }

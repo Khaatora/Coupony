@@ -18,8 +18,7 @@ class AppTheme {
       textTheme: ButtonTextTheme.primary,
     ),
     appBarTheme: AppBarTheme(
-      color: AppColor.primaryColor,
-      foregroundColor: AppColor.white,
+      backgroundColor: AppColor.primaryColor,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(

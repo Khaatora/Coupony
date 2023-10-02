@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -6,6 +7,7 @@ import 'package:maslaha/core/MVVM/repository/i_token_verification_repository.dar
 import 'package:maslaha/core/constants/routes.dart';
 import 'package:maslaha/core/errors/failures/server_failure.dart';
 import 'package:maslaha/core/home_layout/view/home_layout.dart';
+import 'package:maslaha/core/services/firebase/firebase_api.dart';
 import 'package:maslaha/core/services/secured_storage_data/secured_storage_data.dart';
 import 'package:maslaha/core/services/services_locator.dart';
 import 'package:maslaha/forgot_password/view/forgot_password_screen.dart';
@@ -17,17 +19,23 @@ import 'core/MVVM/model/app_state_model.dart';
 import 'core/global/theme.dart';
 import 'core/utils/enums/cache_enums.dart';
 import 'core/utils/enums/token_enums.dart';
+import 'firebase_options.dart';
 
 late String route;
 
 void main() async {
   final WidgetsBinding widgetsBinding =
       WidgetsFlutterBinding.ensureInitialized();
+
   // uncomment to simulate IOS behavior and uncomment theme's TargetPlatform
   // debugDefaultTargetPlatformOverride  = TargetPlatform.iOS;
   ServicesLocator().init();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await sl<FirebaseApi>().initNotifications();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await sl<ISecuredStorageData>().deleteAll();
+  // await sl<ISecuredStorageData>().deleteAll();
   final result = await sl<ITokenVerificationRepository>().validateToken();
   await FSSSecuredStorageData.cacheTmpCache();
   // sl<ISecuredStorageData>().readAll();
