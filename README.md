@@ -12,9 +12,10 @@ Responsive and Adaptive Coupon gathering app
 - Works on Android and Ios
 - Update password with code
 - Sign Out
+- Push Notifications
 - Settings screen(working on)
 - localization (working on, final step)
-- adding Firebase cloud messaging for better UX (planned post release on store)
+- Firebase cloud messaging for better UX (planned post release on store)
 
 
 ## Tech Used
